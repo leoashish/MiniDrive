@@ -1,12 +1,9 @@
-import os
-from flask import Flask, render_template, request, send_from_directory, redirect, url_for
-from file_manager import get_all_files, delete_file
-from werkzeug.utils import secure_filename
+from flask import Flask, render_template, request, redirect, url_for, send_file
+from io import BytesIO
+from file_manager import save_file_to_db, get_all_files, get_file_by_id, delete_file
 import math
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'storage'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 PER_PAGE = 5
 
 @app.route('/')
@@ -14,30 +11,28 @@ def index():
     page = int(request.args.get('page', 1))
     files = get_all_files()
     total = len(files)
-    start = (page - 1) * PER_PAGE
-    end = start + PER_PAGE
-    paginated_files = files[start:end]
-    total_pages = math.ceil(total / PER_PAGE)
-    return render_template('index.html', files=paginated_files, page=page, total_pages=total_pages)
+    paginated = files[(page-1)*PER_PAGE: page*PER_PAGE]
+    return render_template("index.html", files=paginated, page=page, total_pages=math.ceil(total/PER_PAGE))
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    if 'file' in request.files:
-        file = request.files['file']
-        if file:
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    file = request.files['file']
+    if file:
+        save_file_to_db(file)
     return redirect(url_for('index'))
 
-@app.route('/download/<filename>')
-def download(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+@app.route('/download/<int:file_id>')
+def download(file_id):
+    record = get_file_by_id(file_id)
+    if record:
+        filename, file_data = record
+        return send_file(BytesIO(file_data), download_name=filename, as_attachment=True)
+    return "File not found", 404
 
-@app.route('/delete/<filename>', methods=['POST'])
-def delete(filename):
-    delete_file(filename)
+@app.route('/delete/<int:file_id>', methods=['POST'])
+def delete(file_id):
+    delete_file(file_id)
     return redirect(url_for('index'))
 
-if __name__ == '__main__':
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+if __name__ == "__main__":
     app.run(debug=True)

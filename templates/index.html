@@ -30,12 +30,12 @@
             <td>{{ file.name }}</td>
             <td>{{ '%.2f' | format(file.size / 1024) }}</td>
             <td>
-                <a href="/download/{{ file.name }}">Download</a>
-                <form action="/delete/{{ file.name }}" method="POST" style="display:inline;">
-                    <button type="submit">Delete</button>
-                </form>
+              <a href="/download/{{ file.id }}">Download</a>
+              <form action="/delete/{{ file.id }}" method="POST" style="display:inline;">
+                <button type="submit">Delete</button>
+              </form>
             </td>
-        </tr>
+          </tr>
         {% endfor %}
         </tbody>
     </table>
