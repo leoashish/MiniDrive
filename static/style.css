@@ -1,0 +1,87 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 2rem;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#upload-form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+#upload-form input[type="file"] {
+    flex: 1;
+}
+
+#upload-form button {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+#drop-zone {
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    text-align: center;
+    color: #999;
+    margin-bottom: 1rem;
+}
+
+#drop-zone.hover {
+    border-color: #333;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+}
+
+a {
+    margin-right: 1rem;
+    color: #0066cc;
+    text-decoration: none;
+}
+
+button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e60000;
+}
+
+.pagination {
+    margin-top: 1rem;
+    text-align: center;
+}
+.pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+}
