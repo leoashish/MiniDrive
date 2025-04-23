@@ -1,9 +1,10 @@
-## This is a small app made using the Flask framework.
+## Mini Drive: Smaller Version of Google Drive
 
 
 ### Run the app.
-1. pip install python
-2. python3 app.py
+1. Python should be installed.
+2. pip install flask
+3. python3 app.py
 
 ## About the App
 It is a small app like Google Drive.
